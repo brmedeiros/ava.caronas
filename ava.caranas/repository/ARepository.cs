@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
-using ava.caranas.domain;
+using ava.caronas.domain;
 
-namespace ava.caranas.repository
+namespace ava.caronas.repository
 {
     public abstract class ARepository<T> : IRepository<T> where T : ABaseEntitiy {
         public ICollection<T> Entities { get; set; }

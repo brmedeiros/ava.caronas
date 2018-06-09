@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ava.caranas.domain {
+namespace ava.caronas.domain {
     public class Endereco : ABaseEntitiy {
         public string Logradouro { get; set; }
         public string Numero { get; set; } //string type accomodates 's/n' entries

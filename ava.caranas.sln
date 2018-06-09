@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2026
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ava.caranas", "ava.caranas\ava.caranas.csproj", "{63BAE134-0D87-425B-A9C9-2B482DCD36E6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ava.caronas", "ava.caranas\ava.caronas.csproj", "{63BAE134-0D87-425B-A9C9-2B482DCD36E6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{204B4163-44E5-40C9-AE1D-FC5E4ADFD4D6}"
 EndProject

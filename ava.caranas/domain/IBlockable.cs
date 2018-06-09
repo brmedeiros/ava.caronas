@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ava.caranas.domain {
+namespace ava.caronas.domain {
     interface IBlockable {
         void Block();
         void Unblock();

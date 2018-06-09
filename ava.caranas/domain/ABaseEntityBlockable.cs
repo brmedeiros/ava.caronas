@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ava.caranas.domain {
+namespace ava.caronas.domain {
     public abstract class ABaseEntityBlockable : ABaseEntitiy, IBlockable {
         private bool _blocked { get; set; }
         public void Block() {

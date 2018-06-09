@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ava.caranas\ava.caranas.csproj" />
+    <ProjectReference Include="..\ava.caranas\ava.caronas.csproj" />
   </ItemGroup>
 
 </Project>

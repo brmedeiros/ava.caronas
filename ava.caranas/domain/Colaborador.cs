@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ava.caranas.domain {
+namespace ava.caronas.domain {
     public class Colaborador : ABaseEntityBlockable {
         public string Nome { get; set; }
         public string EID { get; set; }
