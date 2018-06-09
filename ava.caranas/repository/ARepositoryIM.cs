@@ -7,7 +7,7 @@ using ava.caronas.domain;
 
 namespace ava.caronas.repository
 {
-    public abstract class ARepository<T> : IRepository<T> where T : ABaseEntitiy {
+    public abstract class ARepositoryIM<T> : IRepository<T> where T : ABaseEntitiy {
         public ICollection<T> Entities { get; set; }
         public T Add(T entity) {
             Entities.Add(entity);

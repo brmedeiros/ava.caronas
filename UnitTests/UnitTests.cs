@@ -1,6 +1,7 @@
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ava.caronas.domain;
+using ava.caronas.repository;
 
 namespace UnitTests {
     [TestClass]
