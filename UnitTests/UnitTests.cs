@@ -142,7 +142,7 @@ namespace UnitTests {
                 var carona = Carona.CreateCarona(5, Colaborador.CreateColaborador($"nome{i}", $"nome.{i}", 1000 + i));
                 repository.Add(carona);
             }
-            var caronaParaRetornar = repository.GetById(3);
+            var caronaParaRetornar = repository.GetByID(3);
             Assert.AreEqual("nome2", caronaParaRetornar.Ofertante.Nome);
         }
 
@@ -156,10 +156,34 @@ namespace UnitTests {
                 repository.Add(carona);
             }
             for (int i = numeroDeCaronasRemovidas; i > 0; --i) {
-                var carona = repository.GetById(i);
+                var carona = repository.GetByID(i);
                 repository.Delete(carona);
             }
             Assert.AreEqual(numeroDeCaronasAdicioanadas - numeroDeCaronasRemovidas, repository.Entities.Count);
+        }
+
+        [TestMethod]
+        public void ListCaronas_RetornaAListaDeCaronasDoOfertante() {
+            var repository = new CaronaRepositoryIM();
+            var colaboradorTeste = Colaborador.CreateColaborador("nome teste", $"nome.teste", 1000);
+
+            int numeroDeCaronasDoColaboradorTeste = 2;
+            for (int i = 0; i < numeroDeCaronasDoColaboradorTeste; ++i) {
+                var carona = Carona.CreateCarona(5, colaboradorTeste);
+                repository.Add(carona);
+
+            }
+            int numeroDeCaronasDeOutrosColaboradores = 4;
+            for (int i = 0; i < numeroDeCaronasDeOutrosColaboradores; ++i) {
+                var outrosColaborador = Colaborador.CreateColaborador($"nome{i}", $"nome.{i}", 1001 + i);
+                var carona = Carona.CreateCarona(5, outrosColaborador);
+                repository.Add(carona);
+            }
+
+            var listaDeCaronasDoColaboradorTeste = repository.ListCaronasDoOfertante(colaboradorTeste.EID);
+            int count = 0;
+            foreach (var carona in listaDeCaronasDoColaboradorTeste) ++count;
+            Assert.AreEqual(numeroDeCaronasDoColaboradorTeste, count);
         }
     }
 
@@ -238,7 +262,7 @@ namespace UnitTests {
                 var colaborador = Colaborador.CreateColaborador($"nome{i}", $"nome.{i}", 1000 + i);
                 repository.Add(colaborador);
             }
-            var colaboradorParaRetornar = repository.GetById(3);
+            var colaboradorParaRetornar = repository.GetByID(3);
             Assert.AreEqual("nome2", colaboradorParaRetornar.Nome);
         }
 
@@ -252,10 +276,34 @@ namespace UnitTests {
                 repository.Add(colaborador);
             }
             for (int i = numeroDeColaboradoresRemovidas; i > 0; --i) {
-                var Colaborador = repository.GetById(i);
+                var Colaborador = repository.GetByID(i);
                 repository.Delete(Colaborador);
             }
             Assert.AreEqual(numeroDeColaboradoresAdicioanados - numeroDeColaboradoresRemovidas, repository.Entities.Count);
+        }
+
+        [TestMethod]
+        public void GetByEID_RetornaOColaboradorCorreto() {
+            var repository = new ColaboradorRepositoryIM();
+            int numeroDeColaboradoresAdicioanados = 4;
+            for (int i = 0; i < numeroDeColaboradoresAdicioanados; ++i) {
+                var colaborador = Colaborador.CreateColaborador($"nome{i}", $"nome.{i}", 1000 + i);
+                repository.Add(colaborador);
+            }
+            var colaboradorParaRetornar = repository.GetbyEID("nome.0");
+            Assert.AreEqual(1, colaboradorParaRetornar.ID);
+        }
+
+        [TestMethod]
+        public void GetByPID_RetornaOColaboradorCorreto() {
+            var repository = new ColaboradorRepositoryIM();
+            int numeroDeColaboradoresAdicioanados = 4;
+            for (int i = 0; i < numeroDeColaboradoresAdicioanados; ++i) {
+                var colaborador = Colaborador.CreateColaborador($"nome{i}", $"nome.{i}", 1000 + i);
+                repository.Add(colaborador);
+            }
+            var colaboradorParaRetornar = repository.GetByPID(1003);
+            Assert.AreEqual(4, colaboradorParaRetornar.ID);
         }
     }
 }

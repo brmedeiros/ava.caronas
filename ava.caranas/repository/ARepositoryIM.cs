@@ -9,7 +9,7 @@ namespace ava.caronas.repository {
     public abstract class ARepositoryIM<T> : IRepository<T> where T : ABaseEntitiy {
         public ICollection<T> Entities { get; set; } = new List<T>();
 
-        private int SetId(T entity) {
+        private int SetID(T entity) {
             if (Entities.Count == 0) {
                 entity.ID = 1;
                 return entity.ID;
@@ -21,7 +21,7 @@ namespace ava.caronas.repository {
         }
 
         public T Add(T entity) {
-            SetId(entity);
+            SetID(entity);
             Entities.Add(entity);
             return entity;
         }
@@ -36,7 +36,7 @@ namespace ava.caronas.repository {
             return Entities.AsQueryable().Where(predicate).FirstOrDefault();
         }
 
-        public T GetById(int id) {
+        public T GetByID(int id) {
             return Get(e => e.ID == id);
         }
 
