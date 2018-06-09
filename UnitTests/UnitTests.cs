@@ -32,7 +32,8 @@ namespace UnitTests {
         [TestMethod]
         public void OcuparVaga_ReduzONumeroDeVagasDisponiveisCorretamente() {
             var carona = Carona.CreateCarona(5, Colaborador.CreateColaborador("nome", "nome.n", 4525));
-            carona.OcuparVagas();
+            var caroneiro = Colaborador.CreateColaborador("nome2", "nome.n2", 1212);
+            carona.OcuparVagas(caroneiro);
             int vagasRestantes = 4;
             Assert.AreEqual(vagasRestantes, carona.VagasDisponiveis);
         }
@@ -41,10 +42,44 @@ namespace UnitTests {
         [ExpectedException(typeof(NaoHaVagasDisponiveisException))]
         public void OcuparVaga_NaoPermiteOcuparSeONumeroDeVagasDisponiveisFor0() {
             var carona = Carona.CreateCarona(1, Colaborador.CreateColaborador("nome", "nome.n", 4525));
-            carona.OcuparVagas();
-            carona.OcuparVagas();
+            var caroneiro1 = Colaborador.CreateColaborador("nome2", "nome.n2", 1212);
+            var caroneiro2 = Colaborador.CreateColaborador("nome3", "nome.n3", 1256);
+            carona.OcuparVagas(caroneiro1);
+            carona.OcuparVagas(caroneiro2);
+        }
+
+        [TestMethod]
+        public void OcuparVaga_IncrementaAListaDeCaroneiros() {
+            var carona = Carona.CreateCarona(5, Colaborador.CreateColaborador("nome", "nome.n", 4525));
+            int numeroDeCaroneiros = 4;
+            for (int i = 0; i < numeroDeCaroneiros; ++i) {
+                var caroneiro = Colaborador.CreateColaborador($"nome{i}", $"nome.{i}", 1000 + i);
+                carona.OcuparVagas(caroneiro);
+            }
+            Assert.AreEqual(numeroDeCaroneiros, carona.Caroneiros.Count);
+        }
+    
+
+        [TestMethod]
+        [ExpectedException(typeof(CaroneiroJaPresenteException))]
+        public void OcuparVaga_NaoPermiteOcuparSeOCaroneiroJaEstiverNaCarona() {
+            var ofertante = Colaborador.CreateColaborador("nome", "nome.n", 4525);
+            var carona = Carona.CreateCarona(5, ofertante);
+            var caroneiro = Colaborador.CreateColaborador("nome2", "nome.n2", 1252);
+            carona.OcuparVagas(caroneiro);
+            carona.OcuparVagas(caroneiro);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(OfertanteNaoPodeOcuparVagasDaCaronaException))]
+        public void OcuparVaga_NaoPermiteOcuparSeOCaroneiroForOOfertante() {
+            var ofertante = Colaborador.CreateColaborador("nome", "nome.n", 4525);
+            var carona = Carona.CreateCarona(5, ofertante);
+            var caroneiro = Colaborador.CreateColaborador("nome", "nome.n", 4525);
+            carona.OcuparVagas(caroneiro);
         }
     }
+
 
     [TestClass]
     public class ColaboradorTest {
