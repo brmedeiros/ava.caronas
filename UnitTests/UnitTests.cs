@@ -11,21 +11,26 @@ namespace UnitTests {
             var carona = Carona.CreateCarona(2, null);
         }
 
+        //[TestInitialize]
+        //public void InitColaborador() {
+        //    var ofertante = Colaborador.CreateColaborador("nome", "nome.n", 4525);
+        //}
+
         [TestMethod]
         [ExpectedException(typeof(VagasNaoPositivasException))]
         public void Carona_NaoPodeSerInstanciadaComNumeroDeVagasMenorQue1() {
-            var carona = Carona.CreateCarona(0, new Colaborador());
+            var carona = Carona.CreateCarona(0, Colaborador.CreateColaborador("nome", "nome.n", 4525));
         }
 
         [TestMethod]
         [ExpectedException(typeof(VagasMaioresQueOLimiteException))]
         public void Carona_NaoPodeSerInstanciadaComNumeroDeVagasMaiorQueOLimite() {
-            var carona = Carona.CreateCarona(7, new Colaborador());
+            var carona = Carona.CreateCarona(7, Colaborador.CreateColaborador("nome", "nome.n", 4525));
         }
 
         [TestMethod]
         public void OcuparVaga_ReduzONumeroDeVagasDisponiveisCorretamente() {
-            var carona = Carona.CreateCarona(5, new Colaborador());
+            var carona = Carona.CreateCarona(5, Colaborador.CreateColaborador("nome", "nome.n", 4525));
             carona.OcuparVagas();
             int vagasRestantes = 4;
             Assert.AreEqual(0, carona.ID);
@@ -35,9 +40,18 @@ namespace UnitTests {
         [TestMethod]
         [ExpectedException(typeof(NaoHaVagasDisponiveisException))]
         public void OcuparVaga_NaoPermiteOcuparSeONumeroDeVagasDisponiveisFor0() {
-            var carona = Carona.CreateCarona(1, new Colaborador());
+            var carona = Carona.CreateCarona(1, Colaborador.CreateColaborador("nome", "nome.n", 4525));
             carona.OcuparVagas();
             carona.OcuparVagas();
+        }
+    }
+
+    [TestClass]
+    public class ColaboradorTest {
+        [TestMethod]
+        [ExpectedException(typeof(FormatoDeEIDInvalidoException))]
+        public void Colaborador_NaoPodeSerInstaciadaComEIDsDeFormatoInvalido() {
+            var carona = Carona.CreateCarona(5, Colaborador.CreateColaborador("nome", "nm", 4525));
         }
     }
 }
