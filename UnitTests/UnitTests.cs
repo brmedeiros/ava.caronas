@@ -50,8 +50,14 @@ namespace UnitTests {
     public class ColaboradorTest {
         [TestMethod]
         [ExpectedException(typeof(FormatoDeEIDInvalidoException))]
-        public void Colaborador_NaoPodeSerInstaciadaComEIDsDeFormatoInvalido() {
+        public void Colaborador_NaoPodeSerInstaciadaComEIDsMenoresQue3Caracteres() {
             var carona = Carona.CreateCarona(5, Colaborador.CreateColaborador("nome", "nm", 4525));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(FormatoDeEIDInvalidoException))]
+        public void Colaborador_NaoPodeSerInstaciadaComEIDsMaioresQue20Caracteres() {
+            var carona = Carona.CreateCarona(5, Colaborador.CreateColaborador("nome", "nomesnomesnomes.nomes", 4525));
         }
     }
 }
