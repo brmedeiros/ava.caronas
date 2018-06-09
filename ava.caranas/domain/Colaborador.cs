@@ -10,8 +10,8 @@ namespace ava.caronas.domain {
 
         private Colaborador(string nome, string eid, int pid) {
             Nome = nome;
-            eid = EID;
-            pid = PID;
+            EID = eid;
+            PID = pid;
         }
 
         public static Colaborador CreateColaborador(string nome, string eid, int pid) {

@@ -5,6 +5,6 @@ using ava.caronas.domain;
 
 namespace ava.caronas.repository
 {
-    public class CaronaRepositoryIM : ARepositoryIM<Carona> {
+    public class ColaboradorRepositoryIM : ARepositoryIM<Colaborador> {
     }
 }
