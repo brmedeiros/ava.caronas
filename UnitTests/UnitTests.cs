@@ -33,7 +33,7 @@ namespace UnitTests {
         public void OcuparVaga_ReduzONumeroDeVagasDisponiveisCorretamente() {
             var carona = Carona.CreateCarona(5, Colaborador.CreateColaborador("nome", "nome.n", 4525));
             var caroneiro = Colaborador.CreateColaborador("nome2", "nome.n2", 1212);
-            carona.OcuparVagas(caroneiro);
+            carona.JoinCarona(caroneiro);
             int vagasRestantes = 4;
             Assert.AreEqual(vagasRestantes, carona.VagasDisponiveis);
         }
@@ -44,8 +44,8 @@ namespace UnitTests {
             var carona = Carona.CreateCarona(1, Colaborador.CreateColaborador("nome", "nome.n", 4525));
             var caroneiro1 = Colaborador.CreateColaborador("nome2", "nome.n2", 1212);
             var caroneiro2 = Colaborador.CreateColaborador("nome3", "nome.n3", 1256);
-            carona.OcuparVagas(caroneiro1);
-            carona.OcuparVagas(caroneiro2);
+            carona.JoinCarona(caroneiro1);
+            carona.JoinCarona(caroneiro2);
         }
 
         [TestMethod]
@@ -54,7 +54,7 @@ namespace UnitTests {
             int numeroDeCaroneiros = 4;
             for (int i = 0; i < numeroDeCaroneiros; ++i) {
                 var caroneiro = Colaborador.CreateColaborador($"nome{i}", $"nome.{i}", 1000 + i);
-                carona.OcuparVagas(caroneiro);
+                carona.JoinCarona(caroneiro);
             }
             Assert.AreEqual(numeroDeCaroneiros, carona.Caroneiros.Count);
         }
@@ -66,8 +66,8 @@ namespace UnitTests {
             var ofertante = Colaborador.CreateColaborador("nome", "nome.n", 4525);
             var carona = Carona.CreateCarona(5, ofertante);
             var caroneiro = Colaborador.CreateColaborador("nome2", "nome.n2", 1252);
-            carona.OcuparVagas(caroneiro);
-            carona.OcuparVagas(caroneiro);
+            carona.JoinCarona(caroneiro);
+            carona.JoinCarona(caroneiro);
         }
 
         [TestMethod]
@@ -76,7 +76,7 @@ namespace UnitTests {
             var ofertante = Colaborador.CreateColaborador("nome", "nome.n", 4525);
             var carona = Carona.CreateCarona(5, ofertante);
             var caroneiro = Colaborador.CreateColaborador("nome", "nome.n", 4525);
-            carona.OcuparVagas(caroneiro);
+            carona.JoinCarona(caroneiro);
         }
     }
 

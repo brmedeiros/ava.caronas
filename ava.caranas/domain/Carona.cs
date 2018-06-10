@@ -32,7 +32,7 @@ namespace ava.caronas.domain {
             return false;
         }
 
-        public void OcuparVagas(Colaborador caroneiro) {
+        public void JoinCarona(Colaborador caroneiro) {
             if (VagasDisponiveis == 0) throw new NaoHaVagasDisponiveisException();
             if (ExistCaroneiro(caroneiro.EID)) throw new CaroneiroJaPresenteException();
             if (caroneiro.EID == Ofertante.EID) throw new OfertanteNaoPodeOcuparVagasDaCaronaException();
