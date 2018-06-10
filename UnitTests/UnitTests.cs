@@ -391,7 +391,7 @@ namespace UnitTests {
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ColaboradorJaExistenteException))]
+        [ExpectedException(typeof(EntidadeJaExistenteException))]
         public void Add_NaoAdicionaSeEIDJaEstiverCadastrado() {
             var repository = new ColaboradorRepositoryIM();
             var business = new ColaboradorBusiness(repository);
@@ -400,7 +400,7 @@ namespace UnitTests {
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ColaboradorJaExistenteException))]
+        [ExpectedException(typeof(EntidadeJaExistenteException))]
         public void Add_NaoAdicionaSePIDJaEstiverCadastrado() {
             var repository = new ColaboradorRepositoryIM();
             var business = new ColaboradorBusiness(repository);

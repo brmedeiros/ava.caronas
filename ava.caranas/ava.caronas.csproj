@@ -5,8 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Business\ABusiness.cs" />
-    <Compile Remove="Business\IBusiness.cs" />
+    <Compile Remove="Business\ColaboradorJaExistenteException.cs" />
   </ItemGroup>
 
 </Project>
