@@ -39,5 +39,12 @@ namespace ava.caronas.domain {
             Caroneiros.Add(caroneiro);
             VagasDisponiveis = VagasDisponiveis - 1;
         }
+
+        public void LeaveCarona(Colaborador caroneiro) {
+            if (!ExistCaroneiro(caroneiro.EID)) throw new CaroneiroNaoEstaPresenteException();
+            Caroneiros.Remove(caroneiro);
+            VagasDisponiveis = VagasDisponiveis + 1;
+        }
+
     }
 }
