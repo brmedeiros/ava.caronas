@@ -4,4 +4,9 @@
     <TargetFramework>netcoreapp1.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Business\ABusiness.cs" />
+    <Compile Remove="Business\IBusiness.cs" />
+  </ItemGroup>
+
 </Project>
