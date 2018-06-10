@@ -10,6 +10,7 @@ namespace ava.caronas.Business {
     public class ColaboradorBusiness {
 
         private ColaboradorRepositoryIM _repository { get; set; }
+        //private ColaboradorRepositoryEF _repository { get; set; }
 
         public ColaboradorBusiness(ColaboradorRepositoryIM repository) {
             _repository = repository;

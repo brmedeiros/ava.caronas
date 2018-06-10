@@ -2,6 +2,7 @@ using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ava.caronas.domain;
 using ava.caronas.repository;
+using ava.caronas.Business;
 
 namespace UnitTests {
     [TestClass]
@@ -375,6 +376,89 @@ namespace UnitTests {
             }
             var colaboradorParaRetornar = repository.GetByPID(1003);
             Assert.AreEqual(4, colaboradorParaRetornar.ID);
+        }
+    }
+
+    [TestClass]
+    public class ColaboradorBusinessTest {
+        [TestMethod]
+        public void Add_RetornaOColaboradorAdicionado() {
+            var repository = new ColaboradorRepositoryIM();
+            var business = new ColaboradorBusiness(repository);
+            var colaborador = Colaborador.CreateColaborador("nome", "nome.n", 1000);
+            var colaboradorRetornado = business.Add(colaborador);
+            Assert.AreEqual(colaborador.ID, colaboradorRetornado.ID);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ColaboradorJaExistenteException))]
+        public void Add_NaoAdicionaSeEIDJaEstiverCadastrado() {
+            var repository = new ColaboradorRepositoryIM();
+            var business = new ColaboradorBusiness(repository);
+            business.Add(Colaborador.CreateColaborador("nome", "nome.n", 1000));
+            business.Add(Colaborador.CreateColaborador("nome", "nome.n", 1001));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ColaboradorJaExistenteException))]
+        public void Add_NaoAdicionaSePIDJaEstiverCadastrado() {
+            var repository = new ColaboradorRepositoryIM();
+            var business = new ColaboradorBusiness(repository);
+            business.Add(Colaborador.CreateColaborador("nome", "nome.n", 1000));
+            business.Add(Colaborador.CreateColaborador("nomez", "nome.nz", 1000));
+        }
+
+        [TestMethod]
+        public void Delete_RetornaOIDDoColaboradorDeletaod() {
+            var repository = new ColaboradorRepositoryIM();
+            var business = new ColaboradorBusiness(repository);
+            var colaborador = Colaborador.CreateColaborador("nome", "nome.n", 1000);
+            var colaborador2 = Colaborador.CreateColaborador("nome2", "nome.n2", 1002);
+            business.Add(colaborador);
+            business.Add(colaborador2);
+            var id = business.Delete(colaborador);
+            Assert.AreEqual(colaborador.ID, id);
+        }
+
+        [TestMethod]
+        public void List_RetornaAListaDeColaboradoresCadastrados() {
+            var repository = new ColaboradorRepositoryIM();
+            var business = new ColaboradorBusiness(repository);
+            int colaboradoresParaAdicionar = 4;
+            for (int i = 0; i < colaboradoresParaAdicionar; ++i) {
+                var colaborador = Colaborador.CreateColaborador($"nome{i}", $"nome.{i}", 1000 + i);
+                business.Add(colaborador);
+            }
+            var listaDeColaboradores = business.List();
+            int count = 0;
+            foreach (var carona in listaDeColaboradores) ++count;
+            Assert.AreEqual(colaboradoresParaAdicionar, count);
+        }
+
+        [TestMethod]
+        public void List_FiltraAListaDeColaboradoresCadastrados() {
+            var repository = new ColaboradorRepositoryIM();
+            var business = new ColaboradorBusiness(repository);
+            int colaboradoresParaAdicionar = 4;
+            for (int i = 0; i < colaboradoresParaAdicionar; ++i) {
+                var colaborador = Colaborador.CreateColaborador($"nome{i}", $"nome.{i}", 1000 + i);
+                business.Add(colaborador);
+            }
+            int colaboradoresBloqueadosParaAdicionar = 3;
+            for (int i = 0; i < colaboradoresBloqueadosParaAdicionar; ++i) {
+                var colaborador = Colaborador.CreateColaborador($"nomeb{i}", $"nome.b{i}", 2000 + i);
+                colaborador.Block();
+                business.Add(colaborador);
+            }
+            for (int i = 0; i < colaboradoresParaAdicionar; ++i) {
+                var colaborador = Colaborador.CreateColaborador($"nomec{i}", $"nome.c{i}", 3000 + i);
+                business.Add(colaborador);
+            }
+
+            var listaDeColaboradoresBloqueados = business.List(c => c.IsBlocked() == true);
+            int count = 0;
+            foreach (var carona in listaDeColaboradoresBloqueados) ++count;
+            Assert.AreEqual(colaboradoresBloqueadosParaAdicionar, count);
         }
     }
 }
