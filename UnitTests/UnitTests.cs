@@ -8,7 +8,7 @@ namespace UnitTests {
     public class CaronaTest {
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Carona_NaoPodeSerInstanciadaSemOfertante() {
+        public void Carona_NaoPodeSerCriadaSemOfertante() {
             var carona = Carona.CreateCarona(2, null);
         }
 
@@ -19,14 +19,22 @@ namespace UnitTests {
 
         [TestMethod]
         [ExpectedException(typeof(VagasNaoPositivasException))]
-        public void Carona_NaoPodeSerInstanciadaComNumeroDeVagasMenorQue1() {
+        public void Carona_NaoPodeSerCriadaComNumeroDeVagasMenorQue1() {
             var carona = Carona.CreateCarona(0, Colaborador.CreateColaborador("nome", "nome.n", 4525));
         }
 
         [TestMethod]
         [ExpectedException(typeof(VagasMaioresQueOLimiteException))]
-        public void Carona_NaoPodeSerInstanciadaComNumeroDeVagasMaiorQueOLimite() {
+        public void Carona_NaoPodeSerCriadaComNumeroDeVagasMaiorQueOLimite() {
             var carona = Carona.CreateCarona(7, Colaborador.CreateColaborador("nome", "nome.n", 4525));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ColaboradorBloqueadoException))]
+        public void Carona_NaoPodeSerCriadaSeOOfertanteEstiverBloquado() {
+            var ofertante = Colaborador.CreateColaborador("nome", "nome.n", 4525);
+            ofertante.Block();
+            var carona = Carona.CreateCarona(4, ofertante);
         }
 
         [TestMethod]
@@ -58,7 +66,16 @@ namespace UnitTests {
             }
             Assert.AreEqual(numeroDeCaroneiros, carona.Caroneiros.Count);
         }
-    
+
+        [TestMethod]
+        [ExpectedException(typeof(ColaboradorBloqueadoException))]
+        public void JoinCarona_NaoPermiteOcuparVagasSeOCaroneiroEstiverBloqueado() {
+            var ofertante = Colaborador.CreateColaborador("nome", "nome.n", 4525);
+            var carona = Carona.CreateCarona(5, ofertante);
+            var caroneiro = Colaborador.CreateColaborador("nome2", "nome.n2", 1252);
+            caroneiro.Block();
+            carona.JoinCarona(caroneiro);
+        }
 
         [TestMethod]
         [ExpectedException(typeof(CaroneiroJaPresenteException))]
@@ -97,8 +114,6 @@ namespace UnitTests {
             carona.LeaveCarona(caroneiro);
             Assert.AreEqual(5, carona.VagasDisponiveis);
         }
-
-
     }
 
 
@@ -106,13 +121,13 @@ namespace UnitTests {
     public class ColaboradorTest {
         [TestMethod]
         [ExpectedException(typeof(FormatoDeEIDInvalidoException))]
-        public void Colaborador_NaoPodeSerInstaciadaComEIDsMenoresQue3Caracteres() {
+        public void Colaborador_NaoPodeSerCriadoComEIDsMenoresQue3Caracteres() {
             var colaborador = Colaborador.CreateColaborador("nome", "nm", 4525);
         }
 
         [TestMethod]
         [ExpectedException(typeof(FormatoDeEIDInvalidoException))]
-        public void Colaborador_NaoPodeSerInstaciadaComEIDsMaioresQue20Caracteres() {
+        public void Colaborador_NaoPodeSerCriadoComEIDsMaioresQue20Caracteres() {
             var colaborador = Colaborador.CreateColaborador("nome", "nomesnomesnomes.nomes", 4525);
         }
 

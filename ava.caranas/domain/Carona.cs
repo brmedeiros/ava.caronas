@@ -24,6 +24,7 @@ namespace ava.caronas.domain {
             if (ofertante == null) throw new ArgumentNullException();
             if (vagas < 1) throw new VagasNaoPositivasException();
             if (vagas > LIMITE_VAGAS) throw new VagasMaioresQueOLimiteException();
+            if (ofertante.IsBlocked()) throw new ColaboradorBloqueadoException();
             return new Carona(vagas, ofertante);
         }
 
@@ -34,6 +35,8 @@ namespace ava.caronas.domain {
 
         public void JoinCarona(Colaborador caroneiro) {
             if (VagasDisponiveis == 0) throw new NaoHaVagasDisponiveisException();
+            if (IsBlocked()) throw new CaronaBloqueadaException();
+            if (caroneiro.IsBlocked()) throw new ColaboradorBloqueadoException();
             if (ExistCaroneiro(caroneiro.EID)) throw new CaroneiroJaPresenteException();
             if (caroneiro.EID == Ofertante.EID) throw new OfertanteNaoPodeOcuparVagasDaCaronaException();
             Caroneiros.Add(caroneiro);
