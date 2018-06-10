@@ -421,6 +421,30 @@ namespace UnitTests {
         }
 
         [TestMethod]
+        public void Get_RetornaOColaboradorCorreto() {
+            var repository = new ColaboradorRepositoryIM();
+            var business = new ColaboradorBusiness(repository);
+            var colaborador = Colaborador.CreateColaborador("nome", "nome.n", 1000);
+            var colaborador2 = Colaborador.CreateColaborador("nome2", "nome.n2", 1002);
+            business.Add(colaborador);
+            business.Add(colaborador2);
+            var colaboradorRetornado = business.Get(c => colaborador.Nome == "nome");
+            Assert.AreEqual(colaborador.ID, colaboradorRetornado.ID);
+        }
+
+        [TestMethod]
+        public void GetByID_RetornaOColaboradorCorreto() {
+            var repository = new ColaboradorRepositoryIM();
+            var business = new ColaboradorBusiness(repository);
+            var colaborador = Colaborador.CreateColaborador("nome", "nome.n", 1000);
+            var colaborador2 = Colaborador.CreateColaborador("nome2", "nome.n2", 1002);
+            business.Add(colaborador);
+            business.Add(colaborador2);
+            var colaboradorRetornado = business.GetByID(2);
+            Assert.AreEqual(colaborador2.PID, colaboradorRetornado.PID);
+        }
+
+        [TestMethod]
         public void List_RetornaAListaDeColaboradoresCadastrados() {
             var repository = new ColaboradorRepositoryIM();
             var business = new ColaboradorBusiness(repository);
@@ -459,6 +483,19 @@ namespace UnitTests {
             int count = 0;
             foreach (var carona in listaDeColaboradoresBloqueados) ++count;
             Assert.AreEqual(colaboradoresBloqueadosParaAdicionar, count);
+        }
+    }
+
+    [TestClass]
+    public class CaronaBusinessTest {
+        [TestMethod]
+        public void Add_RetornaACaronaAdicionada() {
+            var repository = new CaronaRepositoryIM();
+            var business = new CaronaBusiness(repository);
+            var ofertante = Colaborador.CreateColaborador("nome", "nome.n", 1000);
+            var carona = Carona.CreateCarona(3, ofertante);
+            var caronaRetornada = business.Add(carona);
+            Assert.AreEqual(carona.ID, caronaRetornada.ID);
         }
     }
 }
